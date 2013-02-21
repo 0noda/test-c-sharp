@@ -18,7 +18,7 @@ namespace bidloExpl
             InitializeComponent();
         }
 
-        public string[] getDir(string path)
+        public string[] getDir(string path) //Получить список директорий
         {
             string[] dir = Directory.GetDirectories(path);
             return dir;
@@ -42,21 +42,18 @@ namespace bidloExpl
             }
         }
 
-        private void button2_Click(object sender, EventArgs e) //ОЧИСТКА
+        private void button2_Click(object sender, EventArgs e) //Очистка
         {
             listBox1.Items.Clear();
+            listBox2.Items.Clear();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             string path = @"C:\";
             listBox1.Items.Add(path);
-        }
-
-        //public string repleceChar(string path, int index)
-        //{
-        //    return path.Remove(index);
-        //}
+            listBox2.Items.Add(path);
+        } //События при создании форми
 
         private void button3_Click(object sender, EventArgs e) //предыдущая директория
         {
@@ -93,6 +90,56 @@ namespace bidloExpl
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string path = listBox2.SelectedItem.ToString();
+            textBox2.Text = path;
+            listBox2.Items.Clear();
+            string[] dirList = new string[20];
+            dirList = getDir(path);
+            for (int i = 0; i < dirList.Count(); i++)
+            {
+                listBox2.Items.Add(dirList[i]);
+            }
+            dirList = Directory.GetFiles(path);
+            for (int i = 0; i < dirList.Count(); i++)
+            {
+                listBox2.Items.Add(dirList[i]);
+            }
+        } //Нажатие на элимент второго листбокса
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string path = textBox2.Text.ToString();
+            if (path != @"C:")
+            {
+                string slash = "\\";
+                int index = path.LastIndexOf(slash);
+                int k = path.Count();
+                int m = k - index;
+                for (; index < path.Count(); index++)
+                {
+                    path = path.Remove(index, m);
+                }
+                if (path == @"C:")
+                    path += "\\";
+                textBox2.Text = path;
+                //MessageBox.Show(path,i.ToString());
+                listBox2.Items.Clear();
+                string[] dirList = new string[20];
+                dirList = getDir(path);
+                for (int i = 0; i < dirList.Count(); i++)
+                {
+                    listBox2.Items.Add(dirList[i]);
+                }
+                dirList = Directory.GetFiles(path);
+                for (int i = 0; i < dirList.Count(); i++)
+                {
+                    listBox2.Items.Add(dirList[i]);
+                }
+            }
         }
     }
 }
