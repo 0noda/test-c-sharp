@@ -27,6 +27,7 @@ namespace bidloExpl
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e) //НАЖАТИЕ НА ЭЛЕМЕНТ
         {
             string path = listBox1.SelectedItem.ToString();
+            textBox1.Text = path;
             listBox1.Items.Clear();
             string[] dirList = new string[20];
             dirList = getDir(path);
@@ -34,12 +35,6 @@ namespace bidloExpl
             {
                 listBox1.Items.Add(dirList[i]);
             }
-        }
-
-        private void button1_Click_1(object sender, EventArgs e) //С:\
-        {
-            string path = @"C:\";
-            listBox1.Items.Add(path);
         }
 
         private void button2_Click(object sender, EventArgs e) //ОЧИСТКА
@@ -53,10 +48,40 @@ namespace bidloExpl
             listBox1.Items.Add(path);
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        //public string repleceChar(string path, int index)
+        //{
+        //    return path.Remove(index);
+        //}
+
+
+        private void button3_Click(object sender, EventArgs e) //предыдущая директория
+        {
+            string path = textBox1.Text.ToString();
+            if (path != @"C:\\")
+            {
+                string slash = "\\";
+                int i = path.LastIndexOf(slash);
+                int k = path.Count();
+                int m = k - i;
+                for (; i < path.Count(); i++)
+                {
+                    path = path.Remove(i, m);
+                }
+                textBox1.Text = path;
+                //MessageBox.Show(path,i.ToString());
+                listBox1.Items.Clear();
+                string[] dirList = new string[20];
+                dirList = getDir(path);
+                for (int j = 0; j < dirList.Count(); j++)
+                {
+                    listBox1.Items.Add(dirList[j]);
+                }
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
-
     }
 }
