@@ -35,6 +35,11 @@ namespace bidloExpl
             {
                 listBox1.Items.Add(dirList[i]);
             }
+            dirList=Directory.GetFiles(path);
+            for (int i = 0; i < dirList.Count(); i++)
+            {
+                listBox1.Items.Add(dirList[i]);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e) //ОЧИСТКА
@@ -53,28 +58,34 @@ namespace bidloExpl
         //    return path.Remove(index);
         //}
 
-
         private void button3_Click(object sender, EventArgs e) //предыдущая директория
         {
             string path = textBox1.Text.ToString();
-            if (path != @"C:\\")
+            if (path != @"C:")
             {
                 string slash = "\\";
-                int i = path.LastIndexOf(slash);
+                int index = path.LastIndexOf(slash);
                 int k = path.Count();
-                int m = k - i;
-                for (; i < path.Count(); i++)
+                int m = k - index;
+                for (; index < path.Count(); index++)
                 {
-                    path = path.Remove(i, m);
+                    path = path.Remove(index, m);
                 }
+                if (path == @"C:")
+                    path += "\\";
                 textBox1.Text = path;
                 //MessageBox.Show(path,i.ToString());
                 listBox1.Items.Clear();
                 string[] dirList = new string[20];
                 dirList = getDir(path);
-                for (int j = 0; j < dirList.Count(); j++)
+                for (int i = 0; i < dirList.Count(); i++)
                 {
-                    listBox1.Items.Add(dirList[j]);
+                    listBox1.Items.Add(dirList[i]);
+                }
+                dirList = Directory.GetFiles(path);
+                for (int i = 0; i < dirList.Count(); i++)
+                {
+                    listBox1.Items.Add(dirList[i]);
                 }
             }
         }
