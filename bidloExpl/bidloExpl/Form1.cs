@@ -37,13 +37,13 @@ namespace bidloExpl
 
         private void button2_Click(object sender, EventArgs e) //Очистка
         {
-            listBox1.Items.Clear();
-            listBox1.Items.Add(@"C:\");
-            listBox2.Items.Clear();
-            listBox2.Items.Add(@"C:\");
+            string path = @"C:\";
+            string[] dir = Directory.GetDirectories(path);
+            updateListBox1(dir, path);
+            updateListBox2(dir, path);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e) 
         {
             string path = @"C:\";
             string[] dir = Directory.GetDirectories(path);
@@ -219,6 +219,28 @@ namespace bidloExpl
             string path = textBox1.Text.ToString();
             string[] dir = Directory.GetDirectories(path);
             updateListBox1(dir,path);
+        }
+
+        private void button5_Click_1(object sender, EventArgs e)//Маленькая кнопка 1
+        {
+            string path = textBox1.Text.ToString();
+            DirectoryInfo	source = new DirectoryInfo(path);
+            if (source.Exists == true)
+            {
+                string[] dir = Directory.GetDirectories(path);
+                updateListBox1(dir, path);
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)//Маленькая кнопка 2
+        {
+            string path = textBox2.Text.ToString();
+            DirectoryInfo source = new DirectoryInfo(path);
+            if (source.Exists == true)
+            {
+                string[] dir = Directory.GetDirectories(path);
+                updateListBox2(dir, path);
+            }
         }
     }
 }
