@@ -36,7 +36,7 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.Delete1 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -77,6 +77,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(182, 20);
             this.textBox1.TabIndex = 4;
+            this.textBox1.Text = "C:\\";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // listBox2
@@ -84,7 +85,7 @@
             this.listBox2.FormattingEnabled = true;
             this.listBox2.Location = new System.Drawing.Point(304, 38);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(176, 186);
+            this.listBox2.Size = new System.Drawing.Size(182, 186);
             this.listBox2.TabIndex = 5;
             this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
             this.listBox2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox2_MouseDoubleClick);
@@ -93,8 +94,9 @@
             // 
             this.textBox2.Location = new System.Drawing.Point(304, 12);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(176, 20);
+            this.textBox2.Size = new System.Drawing.Size(182, 20);
             this.textBox2.TabIndex = 6;
+            this.textBox2.Text = "C:\\";
             // 
             // button1
             // 
@@ -112,38 +114,39 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(47, 23);
             this.button4.TabIndex = 8;
-            this.button4.Text = "Move";
+            this.button4.Text = "Copy";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // button5
+            // Delete1
             // 
-            this.button5.Location = new System.Drawing.Point(87, 230);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(54, 23);
-            this.button5.TabIndex = 9;
-            this.button5.Text = "Delete";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.Delete1.Location = new System.Drawing.Point(87, 230);
+            this.Delete1.Name = "Delete1";
+            this.Delete1.Size = new System.Drawing.Size(54, 23);
+            this.Delete1.TabIndex = 9;
+            this.Delete1.Text = "Delete1";
+            this.Delete1.UseVisualStyleBackColor = true;
+            this.Delete1.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(373, 227);
+            this.button6.Location = new System.Drawing.Point(379, 227);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(47, 23);
+            this.button6.Size = new System.Drawing.Size(54, 23);
             this.button6.TabIndex = 10;
-            this.button6.Text = "button6";
+            this.button6.Text = "Delete2";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(426, 227);
+            this.button7.Location = new System.Drawing.Point(439, 227);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(54, 23);
+            this.button7.Size = new System.Drawing.Size(47, 23);
             this.button7.TabIndex = 11;
-            this.button7.Text = "button7";
+            this.button7.Text = "Copy";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // Form1
             // 
@@ -152,7 +155,7 @@
             this.ClientSize = new System.Drawing.Size(693, 262);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.Delete1);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox2);
@@ -179,7 +182,7 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button Delete1;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
     }

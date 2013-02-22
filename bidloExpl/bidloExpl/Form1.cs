@@ -28,6 +28,13 @@ namespace bidloExpl
         {
         }
 
+        public string getFileOrDir(string path)//"C:\dir1\file.ext" -> "file.ext"
+        {
+            int index = path.LastIndexOf("\\");
+            path = path.Remove(0,index+1);
+            return path;
+        }
+
         private void button2_Click(object sender, EventArgs e) //Очистка
         {
             listBox1.Items.Clear();
@@ -39,8 +46,8 @@ namespace bidloExpl
         private void Form1_Load(object sender, EventArgs e)
         {
             string path = @"C:\";
-            listBox1.Items.Add(path);
-            listBox2.Items.Add(path);
+            string[] dir = Directory.GetDirectories(path);
+            updateListBox1(dir, path);
         } //События при создании форми
 
         public string retDir(string path, int index)
@@ -57,14 +64,19 @@ namespace bidloExpl
         { 
                 listBox1.Items.Clear();
                 dirList = getDir(path);
+                string fromTextBox = textBox1.Text.ToString();
                 for (int i = 0; i < dirList.Count(); i++)
                 {
+                    dirList[i] = getFileOrDir(dirList[i]); //######
                     listBox1.Items.Add(dirList[i]);
+                    //dirList[i] = fromTextBox + dirList[i];
                 }
                 dirList = Directory.GetFiles(path);
                 for (int i = 0; i < dirList.Count(); i++)
                 {
+                    dirList[i] = getFileOrDir(dirList[i]); //######
                     listBox1.Items.Add(dirList[i]);
+                    //dirList[i] = fromTextBox + dirList[i];
                 }
         }
 
@@ -74,11 +86,13 @@ namespace bidloExpl
             dirList = getDir(path);
             for (int i = 0; i < dirList.Count(); i++)
             {
+                dirList[i] = getFileOrDir(dirList[i]);
                 listBox2.Items.Add(dirList[i]);
             }
             dirList = Directory.GetFiles(path);
             for (int i = 0; i < dirList.Count(); i++)
             {
+                dirList[i] = getFileOrDir(dirList[i]);
                 listBox2.Items.Add(dirList[i]);
             }
         }
@@ -115,8 +129,7 @@ namespace bidloExpl
             {
                 string slash = "\\";
                 int index = path.LastIndexOf(slash);
-                int k = path.Count();
-                int m = k - index;
+                int m = path.Count() - index;
                 for (; index < path.Count(); index++)
                 {
                     path = path.Remove(index, m);
@@ -129,15 +142,18 @@ namespace bidloExpl
             }
         } //return list2
 
-        private void button5_Click(object sender, EventArgs e)//Удалить файл
+        private void button5_Click(object sender, EventArgs e)//Кнопка Delete1
         {
             string path = listBox1.SelectedItem.ToString();
             File.Delete(path);
+            path = textBox1.Text.ToString();
+            string[] dir = Directory.GetDirectories(path);
+            updateListBox1(dir,path);
         }
 
         private void listBox2_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            string path = listBox2.SelectedItem.ToString();
+            string path = textBox2.Text.ToString() + listBox2.SelectedItem.ToString() + "\\";
             if (path.Contains(".") == false)
             {
                 textBox2.Text = path;
@@ -149,26 +165,51 @@ namespace bidloExpl
 
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-
-            string path = listBox1.SelectedItem.ToString();
+            string path = textBox1.Text.ToString();
             if (path.Contains(".") == false)
             {
-                textBox1.Text = path;
+                if (path != "C:\\")
+                {
+                    textBox1.Text = path + "\\" + listBox1.SelectedItem.ToString();
+                    path = path + "\\" + listBox1.SelectedItem.ToString();
+                }
+                else
+                {
+                    textBox1.Text = path + listBox1.SelectedItem.ToString();
+                    path = path+ listBox1.SelectedItem.ToString();
+                }
                 string[] dirList = new string[20];
                 updateListBox1(dirList,path);//обновить листбокс1
             }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)//Кнопка Move1
         {
-            string fromPath =listBox1.SelectedItem.ToString();
-            string toPath = textBox2.Text.ToString();
-            File.Copy(fromPath,toPath);
+            string fromPath = listBox1.SelectedItem.ToString();
+            string toPath = textBox2.Text.ToString() + "\\" + getFileOrDir(fromPath);
+            File.Copy(fromPath, toPath);
+            string path = textBox2.Text.ToString();
+            string[] dir = Directory.GetDirectories(path);
+            updateListBox2(dir, path);
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void button6_Click(object sender, EventArgs e)//Кнопка Delete2
         {
-
+            string path = listBox2.SelectedItem.ToString();
+            File.Delete(path);
+            path = textBox2.Text.ToString();
+            string[] dir = Directory.GetDirectories(path);
+            updateListBox2(dir, path);
         }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            string fromPath = listBox2.SelectedItem.ToString();
+            string toPath = textBox1.Text.ToString() + "\\" + getFileOrDir(fromPath);
+            File.Copy(fromPath, toPath);
+            string path = textBox1.Text.ToString();
+            string[] dir = Directory.GetDirectories(path);
+            updateListBox1(dir,path);
+        }//Кнопка Move2
     }
 }
