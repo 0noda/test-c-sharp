@@ -43,25 +43,19 @@ namespace bidloExpl
             listBox2.Items.Add(path);
         } //События при создании форми
 
-        private void button3_Click(object sender, EventArgs e) //предыдущая директория
+        public string retDir(string path, int index)
         {
-            string path = textBox1.Text.ToString();
-            if (path != @"C:")
+            int m = path.Count() - index;
+            for (; index < path.Count(); index++)
             {
-                string slash = "\\";
-                int index = path.LastIndexOf(slash);
-                int k = path.Count();
-                int m = k - index;
-                for (; index < path.Count(); index++)
-                {
-                    path = path.Remove(index, m);
-                }
-                if (path == @"C:")
-                    path += "\\";
-                textBox1.Text = path;
-                //MessageBox.Show(path,i.ToString());
+                path = path.Remove(index, m);
+            }
+            return path;
+        } // C:\dir1\dir2 -> C:\dir1
+
+        public void updateListBox1(string[] dirList, string path)//обновить листбокс1
+        { 
                 listBox1.Items.Clear();
-                string[] dirList = new string[20];
                 dirList = getDir(path);
                 for (int i = 0; i < dirList.Count(); i++)
                 {
@@ -72,12 +66,42 @@ namespace bidloExpl
                 {
                     listBox1.Items.Add(dirList[i]);
                 }
+        }
+
+        public void updateListBox2(string[] dirList, string path)//обновить листбокс2
+        {
+            listBox2.Items.Clear();
+            dirList = getDir(path);
+            for (int i = 0; i < dirList.Count(); i++)
+            {
+                listBox2.Items.Add(dirList[i]);
+            }
+            dirList = Directory.GetFiles(path);
+            for (int i = 0; i < dirList.Count(); i++)
+            {
+                listBox2.Items.Add(dirList[i]);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e) //предыдущая директория листбокс1
+        {
+            string path = textBox1.Text.ToString();
+            if (path != @"C:")
+            {
+                string slash = "\\";
+                int index = path.LastIndexOf(slash);
+                path = retDir(path, index); // C:\dir1\dir2 -> C:\dir1
+                if (path == @"C:")
+                    path += "\\";
+                textBox1.Text = path;
+                //MessageBox.Show(path,i.ToString());
+                string[] dirList = new string[20];
+                updateListBox1(dirList,path);
             }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -100,25 +124,15 @@ namespace bidloExpl
                 if (path == @"C:")
                     path += "\\";
                 textBox2.Text = path;
-                //MessageBox.Show(path,i.ToString());
-                listBox2.Items.Clear();
                 string[] dirList = new string[20];
-                dirList = getDir(path);
-                for (int i = 0; i < dirList.Count(); i++)
-                {
-                    listBox2.Items.Add(dirList[i]);
-                }
-                dirList = Directory.GetFiles(path);
-                for (int i = 0; i < dirList.Count(); i++)
-                {
-                    listBox2.Items.Add(dirList[i]);
-                }
+                updateListBox2(dirList,path);
             }
         } //return list2
 
         private void button5_Click(object sender, EventArgs e)//Удалить файл
         {
-
+            string path = listBox1.SelectedItem.ToString();
+            File.Delete(path);
         }
 
         private void listBox2_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -127,18 +141,8 @@ namespace bidloExpl
             if (path.Contains(".") == false)
             {
                 textBox2.Text = path;
-                listBox2.Items.Clear();
                 string[] dirList = new string[20];
-                dirList = getDir(path);
-                for (int i = 0; i < dirList.Count(); i++)
-                {
-                    listBox2.Items.Add(dirList[i]);
-                }
-                dirList = Directory.GetFiles(path);
-                for (int i = 0; i < dirList.Count(); i++)
-                {
-                    listBox2.Items.Add(dirList[i]);
-                }
+                updateListBox2(dirList,path);
             }
 
         }
@@ -150,20 +154,21 @@ namespace bidloExpl
             if (path.Contains(".") == false)
             {
                 textBox1.Text = path;
-                listBox1.Items.Clear();
                 string[] dirList = new string[20];
-                dirList = getDir(path);
-                for (int i = 0; i < dirList.Count(); i++)
-                {
-                    listBox1.Items.Add(dirList[i]);
-                }
-                dirList = Directory.GetFiles(path);
-
-                for (int i = 0; i < dirList.Count(); i++)
-                {
-                    listBox1.Items.Add(dirList[i]);
-                }
+                updateListBox1(dirList,path);//обновить листбокс1
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string fromPath =listBox1.SelectedItem.ToString();
+            string toPath = textBox2.Text.ToString();
+            File.Copy(fromPath,toPath);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
