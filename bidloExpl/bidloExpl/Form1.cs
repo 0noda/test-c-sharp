@@ -26,26 +26,14 @@ namespace bidloExpl
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e) //НАЖАТИЕ НА ЭЛЕМЕНТ
         {
-            string path = listBox1.SelectedItem.ToString();
-            textBox1.Text = path;
-            listBox1.Items.Clear();
-            string[] dirList = new string[20];
-            dirList = getDir(path);
-            for (int i = 0; i < dirList.Count(); i++)
-            {
-                listBox1.Items.Add(dirList[i]);
-            }
-            dirList=Directory.GetFiles(path);
-            for (int i = 0; i < dirList.Count(); i++)
-            {
-                listBox1.Items.Add(dirList[i]);
-            }
         }
 
         private void button2_Click(object sender, EventArgs e) //Очистка
         {
             listBox1.Items.Clear();
+            listBox1.Items.Add(@"C:\");
             listBox2.Items.Clear();
+            listBox2.Items.Add(@"C:\");
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -94,20 +82,6 @@ namespace bidloExpl
 
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string path = listBox2.SelectedItem.ToString();
-            textBox2.Text = path;
-            listBox2.Items.Clear();
-            string[] dirList = new string[20];
-            dirList = getDir(path);
-            for (int i = 0; i < dirList.Count(); i++)
-            {
-                listBox2.Items.Add(dirList[i]);
-            }
-            dirList = Directory.GetFiles(path);
-            for (int i = 0; i < dirList.Count(); i++)
-            {
-                listBox2.Items.Add(dirList[i]);
-            }
         } //Нажатие на элимент второго листбокса
 
         private void button1_Click(object sender, EventArgs e)
@@ -138,6 +112,56 @@ namespace bidloExpl
                 for (int i = 0; i < dirList.Count(); i++)
                 {
                     listBox2.Items.Add(dirList[i]);
+                }
+            }
+        } //return list2
+
+        private void button5_Click(object sender, EventArgs e)//Удалить файл
+        {
+
+        }
+
+        private void listBox2_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            string path = listBox2.SelectedItem.ToString();
+            if (path.Contains(".") == false)
+            {
+                textBox2.Text = path;
+                listBox2.Items.Clear();
+                string[] dirList = new string[20];
+                dirList = getDir(path);
+                for (int i = 0; i < dirList.Count(); i++)
+                {
+                    listBox2.Items.Add(dirList[i]);
+                }
+                dirList = Directory.GetFiles(path);
+                for (int i = 0; i < dirList.Count(); i++)
+                {
+                    listBox2.Items.Add(dirList[i]);
+                }
+            }
+
+        }
+
+        private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+            string path = listBox1.SelectedItem.ToString();
+            if (path.Contains(".") == false)
+            {
+                textBox1.Text = path;
+                listBox1.Items.Clear();
+                string[] dirList = new string[20];
+                dirList = getDir(path);
+                for (int i = 0; i < dirList.Count(); i++)
+                {
+                    listBox1.Items.Add(dirList[i]);
+                }
+                dirList = Directory.GetFiles(path);
+
+                for (int i = 0; i < dirList.Count(); i++)
+                {
+                    listBox1.Items.Add(dirList[i]);
                 }
             }
         }
