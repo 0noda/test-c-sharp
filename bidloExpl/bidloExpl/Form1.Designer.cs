@@ -69,7 +69,7 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(55, 23);
             this.button3.TabIndex = 3;
-            this.button3.Text = "Return1";
+            this.button3.Text = "Return";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -105,7 +105,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(55, 23);
             this.button1.TabIndex = 7;
-            this.button1.Text = "Return2";
+            this.button1.Text = "Return";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -125,7 +125,7 @@
             this.Delete1.Name = "Delete1";
             this.Delete1.Size = new System.Drawing.Size(54, 23);
             this.Delete1.TabIndex = 9;
-            this.Delete1.Text = "Delete1";
+            this.Delete1.Text = "Delete";
             this.Delete1.UseVisualStyleBackColor = true;
             this.Delete1.Click += new System.EventHandler(this.button5_Click);
             // 
@@ -135,7 +135,7 @@
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(54, 23);
             this.button6.TabIndex = 10;
-            this.button6.Text = "Delete2";
+            this.button6.Text = "Delete";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
