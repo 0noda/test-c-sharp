@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 
 namespace bidloExpl
 {
@@ -24,13 +25,12 @@ namespace bidloExpl
             return dir;
         }
 
-        public bool fileOrDir(string path) //Если файл - директоря, если файл - фолс
+        public bool fileOrDir(string path) //Если файл директоря - тру, если файл - фолс
         {
-            bool rez;
             if(Directory.Exists(path) == true)
-                return rez = true;
+                return true;
             if(File.Exists(path) == true)
-                return rez = false;
+                return  false;
             MessageBox.Show("ЕГГОГ");
             return true;
         }
@@ -108,12 +108,12 @@ namespace bidloExpl
         private void button3_Click(object sender, EventArgs e) //Предыдущая директория листбокс1
         {
             string path = textBox1.Text.ToString();
-            if (path != (@"C:"))
+            if (path.Count() > 2)
             {
                 string slash = "\\";
                 int index = path.LastIndexOf(slash);
                 path = retDir(path, index); // C:\dir1\dir2 -> C:\dir1
-                if (path == @"C:")
+                if (path.Count() == 2)
                     path += "\\";
                 textBox1.Text = path;
                 //MessageBox.Show(path,i.ToString());
@@ -125,12 +125,12 @@ namespace bidloExpl
         private void button1_Click(object sender, EventArgs e)
         {
             string path = textBox2.Text.ToString();
-            if (path != @"C:")
+            if (path.Count() > 2)
             {
                 string slash = "\\";
                 int index = path.LastIndexOf(slash);
                 path = retDir(path, index); // C:\dir1\dir2 -> C:\dir1
-                if (path == @"C:")
+                if (path.Count() == 2)
                     path += "\\";
                 textBox2.Text = path;
                 //MessageBox.Show(path,i.ToString());
@@ -145,10 +145,16 @@ namespace bidloExpl
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)//Нажатие на элимент листбокса1
         {
+            string path = textBox1.Text.ToString()+ "//" + listBox1.SelectedItem.ToString();
+            DateTime time = Directory.GetCreationTime(path);
+            textBox3.Text = time.ToLongDateString();
         }
 
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)//Нажатие на элимент листбокса2
         {
+            string path = textBox2.Text.ToString() + "//" + listBox2.SelectedItem.ToString();
+            DateTime time = Directory.GetCreationTime(path);
+            textBox3.Text = time.ToLongDateString();
         } 
 
         private void button5_Click(object sender, EventArgs e)//Кнопка Delete1
@@ -179,40 +185,62 @@ namespace bidloExpl
         private void listBox2_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             string path = textBox2.Text.ToString();
-            if (path.Contains(".") == false)
+            if (fileOrDir(path) == true)
             {
                 if (path != "C:\\")
                 {
-                    textBox2.Text = path + "\\" + listBox2.SelectedItem.ToString();
-                    path = path + "\\" + listBox2.SelectedItem.ToString();
+                    if (fileOrDir(path + "\\" + listBox2.SelectedItem.ToString()) == true)
+                    {
+                        textBox2.Text = path + "\\" + listBox2.SelectedItem.ToString();
+                        path = path + "\\" + listBox2.SelectedItem.ToString();
+                    }
+                    else
+                        Process.Start(path + "\\" + listBox2.SelectedItem.ToString());
                 }
                 else
                 {
-                    textBox2.Text = path + listBox2.SelectedItem.ToString();
-                    path = path + listBox2.SelectedItem.ToString();
+                    if (fileOrDir(path + "\\" + listBox2.SelectedItem.ToString()) == true)
+                    {
+                        textBox2.Text = path + listBox2.SelectedItem.ToString();
+                        path = path + listBox2.SelectedItem.ToString();
+                    }
+                    else
+                        Process.Start(path + "\\" + listBox2.SelectedItem.ToString());
                 }
                 string[] dirList = new string[20];
-                updateListBox2(dirList, path);//обновить листбокс1
+                if (fileOrDir(path) == true)
+                    updateListBox2(dirList, path);//обновить листбокс2
             }
         }
 
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             string path = textBox1.Text.ToString();
-            if (path.Contains(".") == false)
+            if (fileOrDir(path) == true)
             {
                 if (path != "C:\\")
                 {
-                    textBox1.Text = path + "\\" + listBox1.SelectedItem.ToString();
-                    path = path + "\\" + listBox1.SelectedItem.ToString();
+                    if (fileOrDir(path + "\\" + listBox1.SelectedItem.ToString()) == true)
+                    {
+                        textBox1.Text = path + "\\" + listBox1.SelectedItem.ToString();
+                        path = path + "\\" + listBox1.SelectedItem.ToString();
+                    }
+                    else
+                        Process.Start(path + "\\" + listBox1.SelectedItem.ToString());
                 }
                 else
                 {
-                    textBox1.Text = path + listBox1.SelectedItem.ToString();
-                    path = path+ listBox1.SelectedItem.ToString();
+                    if (fileOrDir(path + "\\" + listBox1.SelectedItem.ToString()) == true)
+                    {
+                        textBox1.Text = path + listBox1.SelectedItem.ToString();
+                        path = path + listBox1.SelectedItem.ToString();
+                    }
+                    else
+                        Process.Start(path + "\\" + listBox1.SelectedItem.ToString());
                 }
                 string[] dirList = new string[20];
-                updateListBox1(dirList,path);//обновить листбокс1
+                if (fileOrDir(path) == true)
+                    updateListBox1(dirList, path);//обновить листбокс2
             }
         }
 
@@ -242,25 +270,33 @@ namespace bidloExpl
             updateListBox1(dir, path);
         }
 
-        private void button5_Click_1(object sender, EventArgs e)//Маленькая кнопка 1
+
+
+        private void textBox2_KeyDown(object sender, KeyEventArgs e)
         {
-            string path = textBox1.Text.ToString();
-            DirectoryInfo	source = new DirectoryInfo(path);
-            if (source.Exists == true)
+            if (e.KeyCode == Keys.Enter)
             {
-                string[] dir = Directory.GetDirectories(path);
-                updateListBox1(dir, path);
+                string path = textBox2.Text.ToString();
+                DirectoryInfo source = new DirectoryInfo(path);
+                if (source.Exists == true)
+                {
+                    string[] dir = Directory.GetDirectories(path);
+                    updateListBox2(dir, path);
+                }
             }
         }
 
-        private void button8_Click(object sender, EventArgs e)//Маленькая кнопка 2
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
-            string path = textBox2.Text.ToString();
-            DirectoryInfo source = new DirectoryInfo(path);
-            if (source.Exists == true)
+            if (e.KeyCode == Keys.Enter)
             {
-                string[] dir = Directory.GetDirectories(path);
-                updateListBox2(dir, path);
+                string path = textBox1.Text.ToString();
+                DirectoryInfo source = new DirectoryInfo(path);
+                if (source.Exists == true)
+                {
+                    string[] dir = Directory.GetDirectories(path);
+                    updateListBox1(dir, path);
+                }
             }
         }
     }
