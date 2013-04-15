@@ -50,12 +50,22 @@ namespace bidloExpl
             updateListBox2(dir, path);
         }
 
+        public string[] getDrive()
+        {
+            return Environment.GetLogicalDrives();
+        }
+
         private void Form1_Load(object sender, EventArgs e) 
         {
             string path = @"C:\";
             string[] dir = Directory.GetDirectories(path);
             updateListBox1(dir, path);
             updateListBox2(dir, path);
+            string[] driveList = getDrive();
+            for (int i = 0; i < driveList.Count(); i++)
+                comboBox1.Items.Add(driveList[i]);
+            for (int i = 0; i < driveList.Count(); i++)
+                comboBox2.Items.Add(driveList[i]);
         } //События при создании форми
 
         public string retDir(string path, int index)
@@ -139,10 +149,6 @@ namespace bidloExpl
             }
         } //Предыдущая директория листбокс2
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-        }
-
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)//Нажатие на элимент листбокса1
         {
             string path = textBox1.Text.ToString()+ "//" + listBox1.SelectedItem.ToString();
@@ -182,7 +188,7 @@ namespace bidloExpl
             updateListBox2(dir, path);
         }
 
-        private void listBox2_MouseDoubleClick(object sender, MouseEventArgs e)
+       private void listBox2_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             string path = textBox2.Text.ToString();
             if (fileOrDir(path) == true)
@@ -270,7 +276,19 @@ namespace bidloExpl
             updateListBox1(dir, path);
         }
 
-
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string path = textBox1.Text.ToString();
+                DirectoryInfo source = new DirectoryInfo(path);
+                if (source.Exists == true)
+                {
+                    string[] dir = Directory.GetDirectories(path);
+                    updateListBox1(dir, path);
+                }
+            }
+        }
 
         private void textBox2_KeyDown(object sender, KeyEventArgs e)
         {
@@ -286,18 +304,35 @@ namespace bidloExpl
             }
         }
 
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        private string getTime(int index)
         {
-            if (e.KeyCode == Keys.Enter)
+            string path = textBox1.Text.ToString() + "//" + listBox1.Items[index].ToString();
+            DateTime time = Directory.GetCreationTime(path);
+            textBox3.Text = time.ToLongDateString();
+            return time.ToString();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string path = comboBox1.SelectedItem.ToString();
+            if (Directory.Exists(path) == true)
             {
-                string path = textBox1.Text.ToString();
-                DirectoryInfo source = new DirectoryInfo(path);
-                if (source.Exists == true)
-                {
-                    string[] dir = Directory.GetDirectories(path);
-                    updateListBox1(dir, path);
-                }
+                string[] dir = Directory.GetDirectories(path);
+                textBox1.Text = path;
+                updateListBox1(dir, path);
             }
         }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string path = comboBox2.SelectedItem.ToString();
+            if (Directory.Exists(path) == true)
+            {
+                string[] dir = Directory.GetDirectories(path);
+                textBox2.Text = path;
+                updateListBox2(dir, path);
+            }
+        }
+
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.button2 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.button3 = new System.Windows.Forms.Button();
@@ -41,7 +42,9 @@
             this.button7 = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // button2
@@ -59,7 +62,7 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(12, 38);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(182, 186);
+            this.listBox1.Size = new System.Drawing.Size(232, 186);
             this.listBox1.TabIndex = 2;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             this.listBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDoubleClick);
@@ -76,7 +79,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 12);
+            this.textBox1.Location = new System.Drawing.Point(62, 12);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(182, 20);
             this.textBox1.TabIndex = 4;
@@ -88,14 +91,14 @@
             this.listBox2.FormattingEnabled = true;
             this.listBox2.Location = new System.Drawing.Point(304, 38);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(182, 186);
+            this.listBox2.Size = new System.Drawing.Size(232, 186);
             this.listBox2.TabIndex = 5;
             this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
             this.listBox2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox2_MouseDoubleClick);
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(304, 12);
+            this.textBox2.Location = new System.Drawing.Point(354, 11);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(182, 20);
             this.textBox2.TabIndex = 6;
@@ -154,7 +157,8 @@
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(618, 53);
+            this.textBox3.BackColor = System.Drawing.SystemColors.Control;
+            this.textBox3.Location = new System.Drawing.Point(618, 83);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(102, 20);
             this.textBox3.TabIndex = 14;
@@ -163,21 +167,39 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(517, 56);
+            this.label1.Location = new System.Drawing.Point(615, 67);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(95, 13);
             this.label1.TabIndex = 15;
             this.label1.Text = "Дата изменения:";
             // 
-            // openFileDialog1
+            // comboBox1
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(12, 11);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(44, 21);
+            this.comboBox1.TabIndex = 16;
+            this.comboBox1.Text = "C:\\";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(304, 11);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(44, 21);
+            this.comboBox2.TabIndex = 17;
+            this.comboBox2.Text = "C:\\";
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(730, 306);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.button7);
@@ -214,7 +236,9 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox2;
     }
 }
 
